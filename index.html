@@ -2,164 +2,224 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0B6E6E">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Admission">
+<title>JAC Admission - Jeevan Asha Educational Samiti</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12303a">
+<meta name="description" content="Apply online for admission at Jeevan Asha Educational Samiti, Kota, Rajasthan.">
 <link rel="manifest" href="manifest.json">
-<title>Child Admission Form</title>
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="JAC Admission">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
-:root{--bg:#EEF4F8;--ink:#14242E;--muted:#506470;--pri:#0B6E6E;--line:#C6D5DE;--card:#fff;--warn:#9A5B00;--ok:#2F7D4F}
-@media (prefers-color-scheme:dark){:root{--bg:#10191F;--ink:#E7EEF2;--muted:#9FB2BD;--pri:#4FB8B8;--line:#2B3D47;--card:#18262E;--warn:#E7B04D;--ok:#6CC38E}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Noto Sans",system-ui,sans-serif}
-main{max-width:560px;margin:0 auto;padding:20px 16px 48px}
-h1{font-size:1.5rem;margin:8px 0 4px}
-h2{font-size:1.1rem;margin:30px 0 8px;padding-top:14px;border-top:1.5px solid var(--line)}
-p.sub{color:var(--muted);margin:0 0 8px}
-label{display:block;font-weight:600;margin:14px 0 4px}
-input,select,textarea{width:100%;padding:12px;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px}
-input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--pri);outline-offset:1px}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.doc{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
-.doc .row{display:flex;align-items:center;gap:10px}
-.doc input[type=checkbox]{width:22px;height:22px;flex:none}
-.doc .name{flex:1;font-weight:600}
-.doc .photo{margin-top:8px;display:flex;gap:10px;align-items:center;font-size:.9rem;color:var(--muted)}
-.btn{font:inherit;font-weight:600;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;background:var(--pri);color:#fff}
-.btn.alt{background:transparent;color:var(--pri);border:1.5px solid var(--pri);padding:7px 12px}
-.btn[disabled]{opacity:.6}
-#send{width:100%;margin-top:24px;padding:14px;font-size:1.05rem}
-#sig{width:100%;height:170px;background:#fff;border:1.5px dashed var(--pri);border-radius:8px;touch-action:none;display:block}
-#msg{margin-top:14px;padding:12px;border-radius:8px;display:none}
-#msg.ok{display:block;background:var(--card);border:1.5px solid var(--ok);color:var(--ok)}
-#msg.err{display:block;background:var(--card);border:1.5px solid var(--warn);color:var(--warn)}
+  :root {
+    --ink: #12303a;
+    --ink-2: #1c4a58;
+    --sun: #f0b040;
+    --paper: #f4f7f8;
+    --card: #ffffff;
+    --text: #17262c;
+    --muted: #5b6d74;
+    --line: #d9e2e5;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background: var(--paper);
+    line-height: 1.55;
+  }
+  h1, h2 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; margin: 0; }
+  a { color: var(--ink-2); }
+  :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+
+  /* install bar */
+  #installBar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--sun);
+    color: #2a1d00;
+    padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
+    font-size: 14px;
+  }
+  #installBar button { border: 0; border-radius: 6px; padding: 7px 14px; font-weight: 600; cursor: pointer; background: var(--ink); color: #fff; }
+  #installBar .x { background: transparent; color: #2a1d00; font-size: 18px; padding: 4px 8px; }
+
+  /* hero */
+  header.hero {
+    background: var(--ink);
+    color: #fff;
+    padding: 40px 20px 56px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+  .brand img { width: 56px; height: 56px; border-radius: 12px; }
+  .brand span { font-size: 15px; opacity: .85; }
+  .brand strong { display: block; font-size: 17px; opacity: 1; }
+  .hero h1 { font-size: clamp(30px, 6vw, 46px); max-width: 16ch; }
+  .hero p { max-width: 52ch; color: #cfe0e5; margin: 14px 0 26px; font-size: 17px; }
+  .btn {
+    display: inline-block;
+    background: var(--sun);
+    color: #2a1d00;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 13px 24px;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn.ghost { background: transparent; color: #fff; border: 1.5px solid #5f8591; margin-left: 8px; }
+
+  main { padding: 0 20px 40px; }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+    margin: -28px auto 24px;
+    max-width: 880px;
+  }
+  .panel + .panel { margin-top: 0; }
+  .panel h2 { font-size: 22px; margin-bottom: 12px; }
+  .steps { margin: 0; padding-left: 20px; color: var(--text); }
+  .steps li { margin: 6px 0; }
+  .note { color: var(--muted); font-size: 14px; margin-top: 10px; }
+
+  /* form */
+  #form-section { max-width: 880px; margin: 0 auto; }
+  .frame {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .frame iframe { width: 100%; height: 1500px; border: 0; display: block; }
+  .setup {
+    padding: 24px; background: #fff8e6; border: 1px dashed var(--sun); border-radius: 14px; font-size: 15px;
+  }
+  .setup code { background: #fff; padding: 2px 6px; border-radius: 4px; }
+  .offline { display: none; padding: 24px; text-align: center; color: var(--muted); }
+
+  footer { background: var(--ink); color: #cfe0e5; padding: 32px 20px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 15px; }
+  footer a { color: var(--sun); }
+  footer .wrap { display: grid; gap: 6px; }
+  footer strong { color: #fff; font-size: 16px; }
+
+  @media (max-width: 520px) {
+    .btn.ghost { margin: 10px 0 0; }
+    .frame iframe { height: 1800px; }
+  }
 </style>
 </head>
 <body>
+
+<div id="installBar" role="region" aria-label="Install app">
+  <span>📲 Install the JAC Admission app on your phone</span>
+  <span>
+    <button id="installBtn" type="button">Install</button>
+    <button class="x" id="installClose" type="button" aria-label="Dismiss">×</button>
+  </span>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brand">
+      <img src="icon-192.png" alt="JAC logo">
+      <span><strong>Jeevan Asha Educational Samiti</strong>Kota, Rajasthan</span>
+    </div>
+    <h1>Apply for admission to JAC</h1>
+    <p>Fill in the online form and upload your documents from your phone. You do not need to visit the office to apply.</p>
+    <a class="btn" href="#form-section">Start application</a>
+    <a class="btn ghost" id="openNew" href="#" target="_blank" rel="noopener">Open form in new tab</a>
+  </div>
+</header>
+
 <main>
-<h1>Child Admission Form</h1>
-<p class="sub">Fill in all the details, add the documents, and sign at the end.</p>
-<form id="f" novalidate>
-<label for="loc">Centre / location</label>
-<select id="loc"></select>
-<div id="fields"></div>
+  <section class="panel">
+    <h2>Before you begin</h2>
+    <ol class="steps">
+      <li>Keep your documents ready as clear photos or scans.</li>
+      <li>Fill in every required field in the form below.</li>
+      <li>Upload your documents when the form asks for them.</li>
+      <li>Press Submit and keep the confirmation message.</li>
+    </ol>
+    <p class="note">The upload fields need you to be signed in to a Google account. If the form does not load below, use "Open form in new tab".</p>
+  </section>
 
-<h2>Documents</h2>
-<p class="sub">Tick each document you can provide. Add a photo if you can.</p>
-<div id="docs"></div>
-
-<h2>Signature of Father / Mother / Guardian</h2>
-<p class="sub">Sign with your finger inside the box.</p>
-<canvas id="sig" aria-label="Signature box"></canvas>
-<button type="button" class="btn alt" id="clr" style="margin-top:8px">Clear signature</button>
-
-<label style="display:flex;gap:10px;align-items:flex-start;font-weight:400;margin-top:22px"><input type="checkbox" id="agree" style="width:22px;height:22px;flex:none">I confirm the details above are correct.</label>
-<button class="btn" id="send" type="submit">Send admission form</button>
-<div id="msg" role="status"></div>
-</form>
+  <section id="form-section" aria-label="Admission form">
+    <div class="frame" id="frame"></div>
+    <div class="offline" id="offline">You are offline. Connect to the internet to fill in the admission form.</div>
+  </section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <strong>Jeevan Asha Educational Samiti</strong>
+    <span>2027 Kota Junction, Dadwara, Rajasthan - 324002</span>
+    <span>Email: <a href="mailto:emmanuelprojects1960@gmail.com">emmanuelprojects1960@gmail.com</a></span>
+    <span>Phone: <a href="tel:+918003991011">8003991011</a></span>
+  </div>
+</footer>
+
 <script>
-// ---- Edit these settings ----
-const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
-const LOCATIONS = Array.from({length:50},(_,i)=>"Location "+(i+1)); // replace with your 50 names
-const DOCS = ["Birth certificate","Aadhaar card (child)","Parent ID proof","Address proof","Passport-size photo","Previous school certificate"];
-// type: t=text, n=number, d=date, m=10-digit mobile, p=6-digit pin, a=textarea, s=select (o=options). r=1 means required
-const SECTIONS = [
- ["Student details",[
-  {k:"student",l:"Name of the student",r:1},
-  {k:"dob",l:"Date of birth",t:"d",r:1},
-  {k:"pob",l:"Place of birth",r:1},
-  {k:"nation",l:"Nationality",r:1,v:"Indian"},
-  {k:"id_mark",l:"Child's identification mark"},
-  {k:"cause",l:"Cause of admission",t:"a",r:1}]],
- ["Family",[
-  {k:"father",l:"Father's name",r:1},
-  {k:"mother",l:"Mother's name",r:1},
-  {k:"guardian",l:"Guardian's name"},
-  {k:"occ",l:"Occupation",r:1},
-  {k:"income",l:"Average income",t:"n"},
-  {k:"brothers",l:"No. of brothers",t:"n",r:1},
-  {k:"sisters",l:"No. of sisters",t:"n",r:1},
-  {k:"mobile",l:"Mobile no.",t:"m",r:1},
-  {k:"emergency",l:"Emergency contact no.",t:"m",r:1}]],
- ["Address",[
-  {k:"address",l:"Permanent address",t:"a",r:1},
-  {k:"village",l:"Village",r:1},
-  {k:"district",l:"District",r:1},
-  {k:"state",l:"State",r:1},
-  {k:"pin",l:"Pin code",t:"p",r:1}]],
- ["Health",[
-  {k:"health",l:"Health condition"},
-  {k:"height",l:"Height (cm)",t:"n"},
-  {k:"weight",l:"Weight (kg)",t:"n"},
-  {k:"blood",l:"Blood group",t:"s",o:["Not sure","A+","A-","B+","B-","AB+","AB-","O+","O-"]}]],
- ["Who brought the child",[
-  {k:"bringer",l:"Name",r:1},
-  {k:"relation",l:"Relation to the child",r:1}]]
-];
-// -----------------------------
-const $=id=>document.getElementById(id), ALL=SECTIONS.flatMap(s=>s[1]);
-$("loc").innerHTML='<option value="">Select your centre</option>'+LOCATIONS.map(l=>`<option>${l}</option>`).join("");
-const qLoc=new URLSearchParams(location.search).get("loc");
-if(qLoc&&LOCATIONS.includes(qLoc)){$("loc").value=qLoc;$("loc").disabled=true}
+  // 1) Paste your Google Form link here (the "Send" > link button URL, ending in /viewform)
+  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScIi8fuNSNk9_5-2NiWSPeGkKsaTrypf0vSr7bXhWZuWJn95A/viewform?usp=header";
 
-$("fields").innerHTML=SECTIONS.map(([h,fs])=>`<h2>${h}</h2>`+fs.map(f=>{
-  const id="f_"+f.k,t=f.t||"";let c;
-  if(t==="a")c=`<textarea id="${id}" rows="3"></textarea>`;
-  else if(t==="s")c=`<select id="${id}">${f.o.map(o=>`<option value="${o==="Not sure"?"":o}">${o}</option>`).join("")}</select>`;
-  else c=`<input id="${id}" autocomplete="off" value="${f.v||""}" ${t==="d"?'type="date"':t==="n"?'type="number" min="0" inputmode="numeric"':t==="m"?'type="tel" inputmode="numeric" maxlength="10"':t==="p"?'inputmode="numeric" maxlength="6"':""}>`;
-  return `<label for="${id}">${f.l}${f.r?"":" (optional)"}</label>${c}`}).join("")).join("");
+  const frame = document.getElementById("frame");
+  const openNew = document.getElementById("openNew");
+  const ready = FORM_URL.startsWith("https://");
 
-$("docs").innerHTML=DOCS.map((d,i)=>`<div class="doc"><div class="row"><input type="checkbox" id="c${i}" aria-labelledby="n${i}"><span class="name" id="n${i}">${d}</span></div>
-<div class="photo"><input type="file" id="p${i}" accept="image/*" capture="environment" hidden><button type="button" class="btn alt" data-i="${i}">Take or choose photo</button><span id="s${i}">No photo</span></div></div>`).join("");
-document.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>$("p"+b.dataset.i).click());
-DOCS.forEach((_,i)=>$("p"+i).onchange=e=>{const f=e.target.files[0];$("s"+i).textContent=f?"Photo added":"No photo";if(f)$("c"+i).checked=true});
+  if (ready) {
+    const sep = FORM_URL.includes("?") ? "&" : "?";
+    const iframe = document.createElement("iframe");
+    iframe.src = FORM_URL + sep + "embedded=true";
+    iframe.title = "JAC admission form";
+    iframe.loading = "lazy";
+    frame.appendChild(iframe);
+    openNew.href = FORM_URL;
+  } else {
+    frame.className = "setup";
+    frame.innerHTML = "<strong>One step left:</strong> open <code>index.html</code>, find <code>FORM_URL</code> and paste your Google Form link there.";
+    openNew.style.display = "none";
+  }
 
-// Signature pad
-const cv=$("sig"),cx=cv.getContext("2d");let drawing=false,signed=false;
-function fit(){const r=cv.getBoundingClientRect();cv.width=r.width;cv.height=r.height;cx.lineWidth=2.5;cx.lineCap="round";cx.strokeStyle="#111";signed=false}
-fit();
-const pt=e=>{const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
-cv.onpointerdown=e=>{drawing=true;cv.setPointerCapture(e.pointerId);cx.beginPath();cx.moveTo(...pt(e))};
-cv.onpointermove=e=>{if(!drawing)return;cx.lineTo(...pt(e));cx.stroke();signed=true};
-cv.onpointerup=cv.onpointercancel=()=>{drawing=false};
-$("clr").onclick=()=>{cx.clearRect(0,0,cv.width,cv.height);signed=false};
+  if (!navigator.onLine) document.getElementById("offline").style.display = "block";
+  window.addEventListener("offline", () => document.getElementById("offline").style.display = "block");
+  window.addEventListener("online", () => document.getElementById("offline").style.display = "none");
 
-function shrink(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);
-img.onload=()=>{const m=1100,s=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");
-c.width=img.width*s;c.height=img.height*s;c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.7).split(",")[1])};
-img.onerror=rej;img.src=u})}
-function show(t,cls){const m=$("msg");m.className=cls;m.textContent=t;m.scrollIntoView({behavior:"smooth",block:"center"})}
-const digits=v=>v.replace(/\D/g,"");
+  // 2) Install button (Android / Chrome)
+  let deferredPrompt;
+  const bar = document.getElementById("installBar");
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!sessionStorage.getItem("jacInstallDismissed")) bar.style.display = "flex";
+  });
+  document.getElementById("installBtn").addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    bar.style.display = "none";
+  });
+  document.getElementById("installClose").addEventListener("click", () => {
+    bar.style.display = "none";
+    try { sessionStorage.setItem("jacInstallDismissed", "1"); } catch (e) {}
+  });
+  window.addEventListener("appinstalled", () => bar.style.display = "none");
 
-$("f").onsubmit=async e=>{
-  e.preventDefault();
-  if(!$("loc").value)return $("loc").focus(),show("Select your centre.","err");
-  for(const f of ALL){const el=$("f_"+f.k),v=el.value.trim();
-    if(f.r&&!v){el.focus();return show("Please fill in: "+f.l,"err")}
-    if(v&&f.t==="m"&&digits(v).length!==10){el.focus();return show(f.l+" must be 10 digits.","err")}
-    if(v&&f.t==="p"&&digits(v).length!==6){el.focus();return show("Pin code must be 6 digits.","err")}}
-  if(!signed)return show("Please sign in the signature box.","err");
-  if(!$("agree").checked)return show("Please tick the box to confirm the details.","err");
-  if(SCRIPT_URL.startsWith("PASTE"))return show("This form is not connected yet. Add the Apps Script link in index.html.","err");
-  const btn=$("send");btn.disabled=true;btn.textContent="Sending...";
-  try{
-    const docs=[];
-    for(let i=0;i<DOCS.length;i++){const file=$("p"+i).files[0];
-      docs.push({name:DOCS[i],have:$("c"+i).checked,photo:file?await shrink(file):null})}
-    const fields={};ALL.forEach(f=>fields[f.k]=$("f_"+f.k).value.trim());
-    const body={location:$("loc").value,fields,docs,signature:cv.toDataURL("image/png").split(",")[1]};
-    const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(body)}); // plain-text body avoids CORS preflight
-    const j=await r.json();
-    if(!j.ok)throw new Error(j.error||"Server error");
-    $("f").reset();$("clr").click();DOCS.forEach((_,i)=>$("s"+i).textContent="No photo");if(qLoc)$("loc").value=qLoc;
-    const miss=docs.filter(d=>!d.have).length;
-    show("Form sent. "+(miss?miss+" document(s) still to submit.":"All documents ticked."),"ok");
-  }catch(err){show("Could not send. Check your internet and try again.","err")}
-  btn.disabled=false;btn.textContent="Send admission form";
-};
-if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+  // 3) Service worker (makes the app installable and the page load offline)
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+  }
 </script>
 </body>
 </html>
