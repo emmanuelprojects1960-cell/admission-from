@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,112 +14,198 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="JAC Admission">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
-  :root {
-    --ink: #12303a;
-    --ink-2: #1c4a58;
-    --sun: #f0b040;
-    --paper: #f4f7f8;
-    --card: #ffffff;
-    --text: #17262c;
-    --muted: #5b6d74;
-    --line: #d9e2e5;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    color: var(--text);
-    background: var(--paper);
-    line-height: 1.55;
-  }
-  h1, h2 { font-family: Georgia, "Times New Roman", serif; line-height: 1.2; margin: 0; }
-  a { color: var(--ink-2); }
-  :focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+:root {
+  --ink: #12303a;
+  --ink-2: #1c4a58;
+  --sun: #f0b040;
+  --paper: #f4f7f8;
+  --card: #ffffff;
+  --text: #17262c;
+  --muted: #5b6d74;
+  --line: #d9e2e5;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  background: var(--paper);
+  line-height: 1.55;
+}
+h1, h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.2;
+  margin: 0;
+}
+a { color: var(--ink-2); }
+:focus-visible {
+  outline: 3px solid var(--sun);
+  outline-offset: 2px;
+}
 
-  /* install bar */
-  #installBar {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    background: var(--sun);
-    color: #2a1d00;
-    padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
-    font-size: 14px;
-  }
-  #installBar button { border: 0; border-radius: 6px; padding: 7px 14px; font-weight: 600; cursor: pointer; background: var(--ink); color: #fff; }
-  #installBar .x { background: transparent; color: #2a1d00; font-size: 18px; padding: 4px 8px; }
+/* Install bar */
+#installBar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--sun);
+  color: #2a1d00;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 16px 8px;
+  font-size: 14px;
+}
+#installBar button {
+  border: 0;
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--ink);
+  color: #fff;
+}
+#installBar .x {
+  background: transparent;
+  color: #2a1d00;
+  font-size: 18px;
+  padding: 4px 8px;
+}
 
-  /* hero */
-  header.hero {
-    background: var(--ink);
-    color: #fff;
-    padding: 40px 20px 56px;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; }
-  .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
-  .brand img { width: 56px; height: 56px; border-radius: 12px; }
-  .brand span { font-size: 15px; opacity: .85; }
-  .brand strong { display: block; font-size: 17px; opacity: 1; }
-  .hero h1 { font-size: clamp(30px, 6vw, 46px); max-width: 16ch; }
-  .hero p { max-width: 52ch; color: #cfe0e5; margin: 14px 0 26px; font-size: 17px; }
-  .btn {
-    display: inline-block;
-    background: var(--sun);
-    color: #2a1d00;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 13px 24px;
-    border-radius: 8px;
-    border: 0;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  .btn.ghost { background: transparent; color: #fff; border: 1.5px solid #5f8591; margin-left: 8px; }
+/* Hero */
+header.hero {
+  background: var(--ink);
+  color: #fff;
+  padding: 40px 20px 56px;
+}
+.wrap { max-width: 880px; margin: 0 auto; }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.brand img {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+.brand span { font-size: 15px; opacity: .85; }
+.brand strong {
+  display: block;
+  font-size: 17px;
+  opacity: 1;
+}
+.hero h1 {
+  font-size: clamp(30px, 6vw, 46px);
+  max-width: 16ch;
+}
+.hero p {
+  max-width: 52ch;
+  color: #cfe0e5;
+  margin: 14px 0 26px;
+  font-size: 17px;
+}
+.btn {
+  display: inline-block;
+  background: var(--sun);
+  color: #2a1d00;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 13px 24px;
+  border-radius: 8px;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-  main { padding: 0 20px 40px; }
-  .panel {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 24px;
-    margin: -28px auto 24px;
-    max-width: 880px;
-  }
-  .panel + .panel { margin-top: 0; }
-  .panel h2 { font-size: 22px; margin-bottom: 12px; }
-  .steps { margin: 0; padding-left: 20px; color: var(--text); }
-  .steps li { margin: 6px 0; }
-  .note { color: var(--muted); font-size: 14px; margin-top: 10px; }
+/* Main content */
+main { padding: 0 20px 40px; }
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+  margin: -28px auto 24px;
+  max-width: 880px;
+}
+.panel + .panel { margin-top: 0; }
+.panel h2 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.steps {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--text);
+}
+.steps li { margin: 6px 0; }
+.note {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 10px;
+}
 
-  /* form */
-  #form-section { max-width: 880px; margin: 0 auto; }
-  .frame {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .frame iframe { width: 100%; height: 1500px; border: 0; display: block; }
-  .setup {
-    padding: 24px; background: #fff8e6; border: 1px dashed var(--sun); border-radius: 14px; font-size: 15px;
-  }
-  .setup code { background: #fff; padding: 2px 6px; border-radius: 4px; }
-  .offline { display: none; padding: 24px; text-align: center; color: var(--muted); }
+/* Form */
+#form-section {
+  max-width: 880px;
+  margin: 0 auto;
+}
+.frame {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.frame iframe {
+  width: 100%;
+  height: 1500px;
+  border: 0;
+  display: block;
+}
+.setup {
+  padding: 24px;
+  background: #fff8e6;
+  border: 1px dashed var(--sun);
+  border-radius: 14px;
+  font-size: 15px;
+}
+.setup code {
+  background: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.offline {
+  display: none;
+  padding: 24px;
+  text-align: center;
+  color: var(--muted);
+}
 
-  footer { background: var(--ink); color: #cfe0e5; padding: 32px 20px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 15px; }
-  footer a { color: var(--sun); }
-  footer .wrap { display: grid; gap: 6px; }
-  footer strong { color: #fff; font-size: 16px; }
+/* Footer */
+footer {
+  background: var(--ink);
+  color: #cfe0e5;
+  padding: 32px 20px calc(32px + env(safe-area-inset-bottom, 0px));
+  font-size: 15px;
+}
+footer a { color: var(--sun); }
+footer .wrap {
+  display: grid;
+  gap: 6px;
+}
+footer strong {
+  color: #fff;
+  font-size: 16px;
+}
 
-  @media (max-width: 520px) {
-    .btn.ghost { margin: 10px 0 0; }
-    .frame iframe { height: 1800px; }
-  }
+@media (max-width: 520px) {
+  .frame iframe { height: 1800px; }
+}
 </style>
 </head>
+
 <body>
 
 <div id="installBar" role="region" aria-label="Install app">
@@ -133,93 +220,161 @@
   <div class="wrap">
     <div class="brand">
       <img src="icon-192.png" alt="JAC logo">
-      <span><strong>Jeevan Asha Educational Samiti</strong>Kota, Rajasthan</span>
+      <span>
+        <strong>Jeevan Asha Educational Samiti</strong>
+        Kota, Rajasthan
+      </span>
     </div>
+
     <h1>Apply for admission to JAC</h1>
-    <p>Fill in the online form and upload your documents from your phone. You do not need to visit the office to apply.</p>
-    <a class="btn" href="#form-section">Start application</a>
-    <a class="btn ghost" id="openNew" href="#" target="_blank" rel="noopener">Open form in new tab</a>
+
+    <p>
+      Fill in the online form and upload your documents from your phone.
+      You do not need to visit the office to apply.
+    </p>
+
+    <!-- Start application no longer scrolls automatically -->
+    <button class="btn" id="startApplication" type="button">
+      Start application
+    </button>
   </div>
 </header>
 
 <main>
+
   <section class="panel">
     <h2>Before you begin</h2>
+
     <ol class="steps">
       <li>Keep your documents ready as clear photos or scans.</li>
       <li>Fill in every required field in the form below.</li>
       <li>Upload your documents when the form asks for them.</li>
       <li>Press Submit and keep the confirmation message.</li>
     </ol>
-    <p class="note">The upload fields need you to be signed in to a Google account. If the form does not load below, use "Open form in new tab".</p>
+
+    <p class="note">
+      The upload fields need you to be signed in to a Google account.
+      The admission form is available below.
+    </p>
   </section>
 
   <section id="form-section" aria-label="Admission form">
     <div class="frame" id="frame"></div>
-    <div class="offline" id="offline">You are offline. Connect to the internet to fill in the admission form.</div>
+    <div class="offline" id="offline">
+      You are offline. Connect to the internet to fill in the admission form.
+    </div>
   </section>
+
 </main>
 
 <footer>
   <div class="wrap">
     <strong>Jeevan Asha Educational Samiti</strong>
     <span>2027 Kota Junction, Dadwara, Rajasthan - 324002</span>
-    <span>Email: <a href="mailto:emmanuelprojects1960@gmail.com">emmanuelprojects1960@gmail.com</a></span>
-    <span>Phone: <a href="tel:+918003991011">8003991011</a></span>
+    <span>
+      Email:
+      <a href="mailto:emmanuelprojects1960@gmail.com">
+        emmanuelprojects1960@gmail.com
+      </a>
+    </span>
+    <span>
+      Phone:
+      <a href="tel:+918003991011">8003991011</a>
+    </span>
   </div>
 </footer>
 
 <script>
-  // 1) Paste your Google Form link here (the "Send" > link button URL, ending in /viewform)
-  const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScIi8fuNSNk9_5-2NiWSPeGkKsaTrypf0vSr7bXhWZuWJn95A/viewform?usp=header";
 
-  const frame = document.getElementById("frame");
-  const openNew = document.getElementById("openNew");
-  const ready = FORM_URL.startsWith("https://");
+// Google Form URL
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScIi8fuNSNk9_5-2NiWSPeGkKsaTrypf0vSr7bXhWZuWJn95A/viewform?usp=header";
 
-  if (ready) {
-    const sep = FORM_URL.includes("?") ? "&" : "?";
-    const iframe = document.createElement("iframe");
-    iframe.src = FORM_URL + sep + "embedded=true";
-    iframe.title = "JAC admission form";
-    iframe.loading = "lazy";
-    frame.appendChild(iframe);
-    openNew.href = FORM_URL;
-  } else {
-    frame.className = "setup";
-    frame.innerHTML = "<strong>One step left:</strong> open <code>index.html</code>, find <code>FORM_URL</code> and paste your Google Form link there.";
-    openNew.style.display = "none";
-  }
+const frame = document.getElementById("frame");
+const ready = FORM_URL.startsWith("https://");
 
-  if (!navigator.onLine) document.getElementById("offline").style.display = "block";
-  window.addEventListener("offline", () => document.getElementById("offline").style.display = "block");
-  window.addEventListener("online", () => document.getElementById("offline").style.display = "none");
+if (ready) {
+  const sep = FORM_URL.includes("?") ? "&" : "?";
 
-  // 2) Install button (Android / Chrome)
-  let deferredPrompt;
-  const bar = document.getElementById("installBar");
-  window.addEventListener("beforeinstallprompt", e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    if (!sessionStorage.getItem("jacInstallDismissed")) bar.style.display = "flex";
+  const iframe = document.createElement("iframe");
+  iframe.src = FORM_URL + sep + "embedded=true";
+  iframe.title = "JAC admission form";
+  iframe.loading = "lazy";
+
+  frame.appendChild(iframe);
+
+} else {
+  frame.className = "setup";
+  frame.innerHTML =
+    "<strong>One step left:</strong> Please configure your Google Form link.";
+}
+
+// Start application button:
+// No automatic scrolling or new tab.
+// The visitor can scroll down manually.
+document.getElementById("startApplication")
+  .addEventListener("click", () => {
+    // Intentionally no automatic scrolling.
   });
-  document.getElementById("installBtn").addEventListener("click", async () => {
+
+// Offline notification
+if (!navigator.onLine) {
+  document.getElementById("offline").style.display = "block";
+}
+
+window.addEventListener("offline", () => {
+  document.getElementById("offline").style.display = "block";
+});
+
+window.addEventListener("online", () => {
+  document.getElementById("offline").style.display = "none";
+});
+
+// Install button (Android / Chrome)
+let deferredPrompt;
+
+const bar = document.getElementById("installBar");
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  if (!sessionStorage.getItem("jacInstallDismissed")) {
+    bar.style.display = "flex";
+  }
+});
+
+document.getElementById("installBtn")
+  .addEventListener("click", async () => {
     if (!deferredPrompt) return;
+
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
+
     deferredPrompt = null;
     bar.style.display = "none";
   });
-  document.getElementById("installClose").addEventListener("click", () => {
-    bar.style.display = "none";
-    try { sessionStorage.setItem("jacInstallDismissed", "1"); } catch (e) {}
-  });
-  window.addEventListener("appinstalled", () => bar.style.display = "none");
 
-  // 3) Service worker (makes the app installable and the page load offline)
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
-  }
+document.getElementById("installClose")
+  .addEventListener("click", () => {
+    bar.style.display = "none";
+
+    try {
+      sessionStorage.setItem("jacInstallDismissed", "1");
+    } catch (e) {}
+  });
+
+window.addEventListener("appinstalled", () => {
+  bar.style.display = "none";
+});
+
+// Service worker
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js");
+  });
+}
+
 </script>
+
 </body>
 </html>
