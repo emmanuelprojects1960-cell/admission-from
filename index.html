@@ -27,7 +27,7 @@
   --line: #d9e2e5;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: auto; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -151,6 +151,7 @@ main { padding: 0 20px 40px; }
 #form-section {
   max-width: 880px;
   margin: 0 auto;
+  scroll-margin-top: 15px;
 }
 .frame {
   background: var(--card);
@@ -233,7 +234,6 @@ footer strong {
       You do not need to visit the office to apply.
     </p>
 
-    <!-- Start application no longer scrolls automatically -->
     <button class="btn" id="startApplication" type="button">
       Start application
     </button>
@@ -241,10 +241,8 @@ footer strong {
 </header>
 
 <main>
-
   <section class="panel">
     <h2>Before you begin</h2>
-
     <ol class="steps">
       <li>Keep your documents ready as clear photos or scans.</li>
       <li>Fill in every required field in the form below.</li>
@@ -264,7 +262,6 @@ footer strong {
       You are offline. Connect to the internet to fill in the admission form.
     </div>
   </section>
-
 </main>
 
 <footer>
@@ -308,12 +305,13 @@ if (ready) {
     "<strong>One step left:</strong> Please configure your Google Form link.";
 }
 
-// Start application button:
-// No automatic scrolling or new tab.
-// The visitor can scroll down manually.
+// Scroll only when Start application is clicked
 document.getElementById("startApplication")
   .addEventListener("click", () => {
-    // Intentionally no automatic scrolling.
+    document.getElementById("form-section").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   });
 
 // Offline notification
