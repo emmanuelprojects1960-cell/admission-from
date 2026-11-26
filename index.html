@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B6E6E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Admission">
+<link rel="manifest" href="manifest.json">
+<title>Child Admission Form</title>
+<style>
+:root{--bg:#EEF4F8;--ink:#14242E;--muted:#506470;--pri:#0B6E6E;--line:#C6D5DE;--card:#fff;--warn:#9A5B00;--ok:#2F7D4F}
+@media (prefers-color-scheme:dark){:root{--bg:#10191F;--ink:#E7EEF2;--muted:#9FB2BD;--pri:#4FB8B8;--line:#2B3D47;--card:#18262E;--warn:#E7B04D;--ok:#6CC38E}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Noto Sans",system-ui,sans-serif}
+main{max-width:560px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:8px 0 4px}
+h2{font-size:1.1rem;margin:30px 0 8px;padding-top:14px;border-top:1.5px solid var(--line)}
+p.sub{color:var(--muted);margin:0 0 8px}
+label{display:block;font-weight:600;margin:14px 0 4px}
+input,select,textarea{width:100%;padding:12px;font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:8px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--pri);outline-offset:1px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.doc{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+.doc .row{display:flex;align-items:center;gap:10px}
+.doc input[type=checkbox]{width:22px;height:22px;flex:none}
+.doc .name{flex:1;font-weight:600}
+.doc .photo{margin-top:8px;display:flex;gap:10px;align-items:center;font-size:.9rem;color:var(--muted)}
+.btn{font:inherit;font-weight:600;border:0;border-radius:8px;padding:10px 14px;cursor:pointer;background:var(--pri);color:#fff}
+.btn.alt{background:transparent;color:var(--pri);border:1.5px solid var(--pri);padding:7px 12px}
+.btn[disabled]{opacity:.6}
+#send{width:100%;margin-top:24px;padding:14px;font-size:1.05rem}
+#sig{width:100%;height:170px;background:#fff;border:1.5px dashed var(--pri);border-radius:8px;touch-action:none;display:block}
+#msg{margin-top:14px;padding:12px;border-radius:8px;display:none}
+#msg.ok{display:block;background:var(--card);border:1.5px solid var(--ok);color:var(--ok)}
+#msg.err{display:block;background:var(--card);border:1.5px solid var(--warn);color:var(--warn)}
+</style>
+</head>
+<body>
+<main>
+<h1>Child Admission Form</h1>
+<p class="sub">Fill in all the details, add the documents, and sign at the end.</p>
+<form id="f" novalidate>
+<label for="loc">Centre / location</label>
+<select id="loc"></select>
+<div id="fields"></div>
+
+<h2>Documents</h2>
+<p class="sub">Tick each document you can provide. Add a photo if you can.</p>
+<div id="docs"></div>
+
+<h2>Signature of Father / Mother / Guardian</h2>
+<p class="sub">Sign with your finger inside the box.</p>
+<canvas id="sig" aria-label="Signature box"></canvas>
+<button type="button" class="btn alt" id="clr" style="margin-top:8px">Clear signature</button>
+
+<label style="display:flex;gap:10px;align-items:flex-start;font-weight:400;margin-top:22px"><input type="checkbox" id="agree" style="width:22px;height:22px;flex:none">I confirm the details above are correct.</label>
+<button class="btn" id="send" type="submit">Send admission form</button>
+<div id="msg" role="status"></div>
+</form>
+</main>
+<script>
+// ---- Edit these settings ----
+const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+const LOCATIONS = Array.from({length:50},(_,i)=>"Location "+(i+1)); // replace with your 50 names
+const DOCS = ["Birth certificate","Aadhaar card (child)","Parent ID proof","Address proof","Passport-size photo","Previous school certificate"];
+// type: t=text, n=number, d=date, m=10-digit mobile, p=6-digit pin, a=textarea, s=select (o=options). r=1 means required
+const SECTIONS = [
+ ["Student details",[
+  {k:"student",l:"Name of the student",r:1},
+  {k:"dob",l:"Date of birth",t:"d",r:1},
+  {k:"pob",l:"Place of birth",r:1},
+  {k:"nation",l:"Nationality",r:1,v:"Indian"},
+  {k:"id_mark",l:"Child's identification mark"},
+  {k:"cause",l:"Cause of admission",t:"a",r:1}]],
+ ["Family",[
+  {k:"father",l:"Father's name",r:1},
+  {k:"mother",l:"Mother's name",r:1},
+  {k:"guardian",l:"Guardian's name"},
+  {k:"occ",l:"Occupation",r:1},
+  {k:"income",l:"Average income",t:"n"},
+  {k:"brothers",l:"No. of brothers",t:"n",r:1},
+  {k:"sisters",l:"No. of sisters",t:"n",r:1},
+  {k:"mobile",l:"Mobile no.",t:"m",r:1},
+  {k:"emergency",l:"Emergency contact no.",t:"m",r:1}]],
+ ["Address",[
+  {k:"address",l:"Permanent address",t:"a",r:1},
+  {k:"village",l:"Village",r:1},
+  {k:"district",l:"District",r:1},
+  {k:"state",l:"State",r:1},
+  {k:"pin",l:"Pin code",t:"p",r:1}]],
+ ["Health",[
+  {k:"health",l:"Health condition"},
+  {k:"height",l:"Height (cm)",t:"n"},
+  {k:"weight",l:"Weight (kg)",t:"n"},
+  {k:"blood",l:"Blood group",t:"s",o:["Not sure","A+","A-","B+","B-","AB+","AB-","O+","O-"]}]],
+ ["Who brought the child",[
+  {k:"bringer",l:"Name",r:1},
+  {k:"relation",l:"Relation to the child",r:1}]]
+];
+// -----------------------------
+const $=id=>document.getElementById(id), ALL=SECTIONS.flatMap(s=>s[1]);
+$("loc").innerHTML='<option value="">Select your centre</option>'+LOCATIONS.map(l=>`<option>${l}</option>`).join("");
+const qLoc=new URLSearchParams(location.search).get("loc");
+if(qLoc&&LOCATIONS.includes(qLoc)){$("loc").value=qLoc;$("loc").disabled=true}
+
+$("fields").innerHTML=SECTIONS.map(([h,fs])=>`<h2>${h}</h2>`+fs.map(f=>{
+  const id="f_"+f.k,t=f.t||"";let c;
+  if(t==="a")c=`<textarea id="${id}" rows="3"></textarea>`;
+  else if(t==="s")c=`<select id="${id}">${f.o.map(o=>`<option value="${o==="Not sure"?"":o}">${o}</option>`).join("")}</select>`;
+  else c=`<input id="${id}" autocomplete="off" value="${f.v||""}" ${t==="d"?'type="date"':t==="n"?'type="number" min="0" inputmode="numeric"':t==="m"?'type="tel" inputmode="numeric" maxlength="10"':t==="p"?'inputmode="numeric" maxlength="6"':""}>`;
+  return `<label for="${id}">${f.l}${f.r?"":" (optional)"}</label>${c}`}).join("")).join("");
+
+$("docs").innerHTML=DOCS.map((d,i)=>`<div class="doc"><div class="row"><input type="checkbox" id="c${i}" aria-labelledby="n${i}"><span class="name" id="n${i}">${d}</span></div>
+<div class="photo"><input type="file" id="p${i}" accept="image/*" capture="environment" hidden><button type="button" class="btn alt" data-i="${i}">Take or choose photo</button><span id="s${i}">No photo</span></div></div>`).join("");
+document.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>$("p"+b.dataset.i).click());
+DOCS.forEach((_,i)=>$("p"+i).onchange=e=>{const f=e.target.files[0];$("s"+i).textContent=f?"Photo added":"No photo";if(f)$("c"+i).checked=true});
+
+// Signature pad
+const cv=$("sig"),cx=cv.getContext("2d");let drawing=false,signed=false;
+function fit(){const r=cv.getBoundingClientRect();cv.width=r.width;cv.height=r.height;cx.lineWidth=2.5;cx.lineCap="round";cx.strokeStyle="#111";signed=false}
+fit();
+const pt=e=>{const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+cv.onpointerdown=e=>{drawing=true;cv.setPointerCapture(e.pointerId);cx.beginPath();cx.moveTo(...pt(e))};
+cv.onpointermove=e=>{if(!drawing)return;cx.lineTo(...pt(e));cx.stroke();signed=true};
+cv.onpointerup=cv.onpointercancel=()=>{drawing=false};
+$("clr").onclick=()=>{cx.clearRect(0,0,cv.width,cv.height);signed=false};
+
+function shrink(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);
+img.onload=()=>{const m=1100,s=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");
+c.width=img.width*s;c.height=img.height*s;c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL("image/jpeg",.7).split(",")[1])};
+img.onerror=rej;img.src=u})}
+function show(t,cls){const m=$("msg");m.className=cls;m.textContent=t;m.scrollIntoView({behavior:"smooth",block:"center"})}
+const digits=v=>v.replace(/\D/g,"");
+
+$("f").onsubmit=async e=>{
+  e.preventDefault();
+  if(!$("loc").value)return $("loc").focus(),show("Select your centre.","err");
+  for(const f of ALL){const el=$("f_"+f.k),v=el.value.trim();
+    if(f.r&&!v){el.focus();return show("Please fill in: "+f.l,"err")}
+    if(v&&f.t==="m"&&digits(v).length!==10){el.focus();return show(f.l+" must be 10 digits.","err")}
+    if(v&&f.t==="p"&&digits(v).length!==6){el.focus();return show("Pin code must be 6 digits.","err")}}
+  if(!signed)return show("Please sign in the signature box.","err");
+  if(!$("agree").checked)return show("Please tick the box to confirm the details.","err");
+  if(SCRIPT_URL.startsWith("PASTE"))return show("This form is not connected yet. Add the Apps Script link in index.html.","err");
+  const btn=$("send");btn.disabled=true;btn.textContent="Sending...";
+  try{
+    const docs=[];
+    for(let i=0;i<DOCS.length;i++){const file=$("p"+i).files[0];
+      docs.push({name:DOCS[i],have:$("c"+i).checked,photo:file?await shrink(file):null})}
+    const fields={};ALL.forEach(f=>fields[f.k]=$("f_"+f.k).value.trim());
+    const body={location:$("loc").value,fields,docs,signature:cv.toDataURL("image/png").split(",")[1]};
+    const r=await fetch(SCRIPT_URL,{method:"POST",body:JSON.stringify(body)}); // plain-text body avoids CORS preflight
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.error||"Server error");
+    $("f").reset();$("clr").click();DOCS.forEach((_,i)=>$("s"+i).textContent="No photo");if(qLoc)$("loc").value=qLoc;
+    const miss=docs.filter(d=>!d.have).length;
+    show("Form sent. "+(miss?miss+" document(s) still to submit.":"All documents ticked."),"ok");
+  }catch(err){show("Could not send. Check your internet and try again.","err")}
+  btn.disabled=false;btn.textContent="Send admission form";
+};
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
